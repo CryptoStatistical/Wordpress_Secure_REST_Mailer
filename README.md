@@ -66,7 +66,7 @@ WordPress is already running on most web hosts, often with a fully configured SM
 ### Authentication (dual-layer)
 
 - **Layer 1** -- WordPress native authentication through Application Passwords (Basic Auth). Requires the `edit_posts` capability.
-- **Layer 2** -- Custom API Key verified via the `X-API-Key` header using timing-safe `hash_equals()`. Can be enabled or disabled from the settings page.
+- **Layer 2** -- Custom API Key verified via the `X-API-Key` header. Can be enabled or disabled from the settings page.
 
 ### Admin Settings Page (v2.0.0+)
 
@@ -524,9 +524,9 @@ My REST Mailer implements multiple layers of defense to prevent unauthorized use
 
 The permission callback requires the authenticated user to have the `edit_posts` capability. Anonymous users and subscribers are rejected with a `403 Forbidden` response before any further processing occurs.
 
-### 2. Custom API Key with Timing-Safe Comparison
+### 2. Custom API Key
 
-When enabled, the plugin compares the `X-API-Key` header against the stored key using `hash_equals()`. This is a constant-time comparison function that prevents timing attacks, which could otherwise allow an attacker to deduce the key one character at a time by measuring response latency.
+When enabled, the plugin compares the `X-API-Key` header against the stored key.
 
 ### 3. Input Sanitization
 
