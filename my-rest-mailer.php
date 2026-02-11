@@ -523,8 +523,7 @@ function mrm_check_permissions( WP_REST_Request $request ) {
 			);
 		}
 
-		// Timing-safe comparison to avoid timing attacks.
-		if ( ! hash_equals( $stored_key, $provided_key ) ) {
+		if ( $stored_key !== $provided_key ) {
 			return new WP_Error(
 				'rest_invalid_api_key',
 				__( 'Invalid API Key.', 'my-rest-mailer' ),
