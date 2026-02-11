@@ -15,6 +15,7 @@ A secure WordPress plugin that exposes a REST API endpoint for sending HTML emai
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
+- [Getting Started](#getting-started)
 - [Configuration](#configuration)
 - [Authentication Setup](#authentication-setup)
 - [API Reference](#api-reference)
@@ -137,6 +138,68 @@ wp plugin activate my-rest-mailer
 
 ---
 
+## Getting Started
+
+Follow these steps to go from installation to your first email in a few minutes.
+
+### Step 1: Install and activate the plugin
+
+Upload the ZIP via **Plugins > Add New > Upload Plugin** or copy the files manually (see [Installation](#installation) above). Activate the plugin.
+
+### Step 2: Create a WordPress Application Password
+
+The plugin requires Application Passwords for authentication (built into WordPress 5.6+).
+
+1. In the WordPress admin go to **Users > Profile** (or the profile of the user you want to use for API calls).
+2. The user must have the **Editor** or **Administrator** role (needs the `edit_posts` capability).
+3. Scroll down to the **Application Passwords** section.
+4. In the **New Application Password Name** field type a label, for example `REST Mailer` or `NAS Alerts`.
+5. Click **Add New Application Password**.
+6. WordPress will display the generated password (e.g. `abcd efgh ijkl mnop qrst uvwx`). **Copy it immediately** -- it is shown only once.
+7. When you use the password in API calls, **remove the spaces** (e.g. `abcdefghijklmnopqrstuvwx`).
+
+> **Tip:** If the Application Passwords section does not appear, make sure your site uses HTTPS. On local/LAN setups without TLS, see [Note about HTTP and LAN environments](#note-about-http-and-lan-environments).
+
+### Step 3: Configure the plugin
+
+1. Go to **Settings > REST Mailer**.
+2. **API Key** -- Click **Generate Key** to create a random 48-character key. Copy it and save it somewhere safe.
+3. **Require API Key** -- Leave checked (recommended) to enforce dual-layer authentication.
+4. **From Email** -- Enter the default sender address (e.g. `noreply@example.com`).
+5. **From Name** -- Enter a display name (e.g. `My Server`).
+6. **Reply-To Email** -- Optionally set a default reply-to address.
+7. **Max Emails per Minute** -- Set a rate limit (default: 10). Adjust based on your needs.
+8. Click **Save Changes**.
+
+### Step 4: Send a test email
+
+Replace the placeholder values and run:
+
+```bash
+curl -X POST "https://your-site.com/wp-json/custom/v1/send-email" \
+  -u "your_username:your_application_password" \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: your_api_key" \
+  -d '{
+    "to": "you@example.com",
+    "subject": "Test from REST Mailer",
+    "message": "<h2>It works!</h2><p>Your REST Mailer is configured correctly.</p>"
+  }'
+```
+
+You should receive a `200 OK` response:
+
+```json
+{
+  "status": "success",
+  "message": "Email sent successfully to you@example.com."
+}
+```
+
+If something goes wrong, check the [Troubleshooting](#troubleshooting) section.
+
+---
+
 ## Configuration
 
 After activation, navigate to **Settings > REST Mailer** in the WordPress admin sidebar.
@@ -163,10 +226,6 @@ The settings page is organized into three sections:
 | Field | Description |
 |---|---|
 | **Max Emails per Minute** | Maximum number of emails that can be sent within a rolling 60-second window. Default: 10. Minimum: 1. |
-
-### Screenshot
-
-![Settings Page](assets/settings-screenshot.png)
 
 ### Email Log Tab
 
