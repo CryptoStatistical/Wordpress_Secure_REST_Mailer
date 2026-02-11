@@ -1,4 +1,4 @@
-# My REST Mailer
+# WORDPRESS Secure REST Mailer
 
 ![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)
 ![License](https://img.shields.io/badge/license-GPL--2.0--or--later-green.svg)
