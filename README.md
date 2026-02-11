@@ -227,10 +227,6 @@ The settings page is organized into three sections:
 |---|---|
 | **Max Emails per Minute** | Maximum number of emails that can be sent within a rolling 60-second window. Default: 10. Minimum: 1. |
 
-### Screenshot
-
-![Settings Page](assets/settings-screenshot.png)
-
 ### Email Log Tab
 
 Switch to the **Email Log** tab to view the last 50 emails sent through the plugin. Each entry shows the date, recipient(s), subject, and whether the send succeeded or failed. Use the **Clear Log** button to purge all entries.
